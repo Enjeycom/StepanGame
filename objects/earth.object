@@ -1,0 +1,9 @@
+characters:
+id = 0
+name = earth
+textre = earth.animation.png
+
+effects:
+jump = 3
+speed = 0.8
+

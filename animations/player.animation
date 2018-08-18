@@ -1,0 +1,23 @@
+texture = player
+levels = 3
+
+name = go:
+width = 128
+height = 256
+level = 0
+frames = 8
+speed = 0.04
+
+name = jump:
+width = 128
+height = 256
+level = 1
+frames = 4
+speed = 0.01
+
+name = stay:
+width = 128
+height = 256
+level = 2
+frames = 2
+speed = 0.04
