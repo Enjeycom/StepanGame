@@ -6,7 +6,7 @@
 #include "./Player.hpp"
 
 Player::Player() {
-    animation.loadFromFile("player.animation");
+    animation.loadFromFile("player");
     sprite.setPosition(0, 0);
     animation.setSprite(sprite);
     animation.changeAnimation("stay", false);

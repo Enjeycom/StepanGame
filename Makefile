@@ -1,7 +1,7 @@
 CXX = g++ -Wall -pedantic
 MAIN_BINARIES = $(basename $(wildcard *Main.cpp))
-HEADERS = $(wildcard *.h)
-OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp %Test.cpp, $(wildcard *.cpp))))
+HEADERS = $(wildcard *.hpp)
+OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp, $(wildcard *.cpp))))
 LIBRARIES = -lsfml-graphics -lsfml-window -lsfml-system
 
 
@@ -9,7 +9,7 @@ LIBRARIES = -lsfml-graphics -lsfml-window -lsfml-system
 .SUFFIXES:
 .PHONY: all compile test checkstyke
 
-all: compile cleanout
+all: compile 
 
 compile: $(MAIN_BINARIES)
 
@@ -19,7 +19,6 @@ checkstyle:
 clean:
 	rm -f *.o
 	rm -f $(MAIN_BINARIES)
-	rm -f $(TEST_BINARIES)
 
 cleanout:
 	rm -f *.o

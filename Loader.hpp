@@ -7,6 +7,7 @@
 class Loader {
     private:
     public:
+        static bool loadVariables();
 };
 
 #endif  // LOADER_H_

@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+#define getPath Pathways::get
+
 class Pathways {
     private:
         static std::vector<std::pair<std::string,std::string>> pathways;

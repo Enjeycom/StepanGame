@@ -4,10 +4,6 @@
 #include "Object.hpp"
 
 Object::Object() {
-    texture.loadFromFile("./textures/player.animation.png");
-    sprite.setPosition(0, 0);
-    sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, 256, 256));
     sprite.setScale(0.5f, 0.5f);
     frame = 0;
 }

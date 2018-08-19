@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 #include "./Animation.hpp"
 #include "./Log.hpp"
+#include "./Tools.hpp"
+#include "./Pathways.hpp"
 
 int Animation::findAnimation(std::string name) {
     for (unsigned int i = 0; i < animations.size(); i++)
@@ -15,37 +17,39 @@ int Animation::findAnimation(std::string name) {
 }
 
 bool Animation::loadFromFile(sf::String filename) {
-    std::ifstream file("./animations/"+filename);
+    filename = getPath("animation") + filename + ".animation";
+    std::ifstream file(filename);
     if (!file.is_open()) {
-        Log::write("ErrorAnimation: file not found!");
+        log("Error loading animation: file \"" + filename + "\" not found!");
         return false;
     }
     std::string command;
     animation tmp;
+    int numStr = 0;
     while (!file.eof()) {
         getline(file, command);
         if (command.empty())
             continue;
         size_t indx = command.find("=");
         if (indx == std::string::npos) {
-            Log::write("ErrorAnimation: incorrect note!");
+            log(filename + " line:" + toStr(numStr) + " Error loading animation: incorrect note!");
             return false;
         }
         std::string name = command.substr(0, indx);
         std::string value = command.substr(indx + 1, command.length() - 1);
-        name.erase(std::remove(name.begin(), name.end(), ' '), name.end());
-        value.erase(std::remove(value.begin(), value.end(), ' '), value.end());
+        trim(name);
+        trim(value);
         if (name == "texture")
-            texture.loadFromFile("./textures/" + value);
+            texture.loadFromFile(getPath("texture") + value + ".texture");
         if (name == "levels")
             levels = std::stoi(value);
         if (name == "name") {
             if (value[value.length() - 1] != ':') {
-                Log::write("ErrorAnimation: incorrect name animation!");
+                log(filename + " line:" + toStr(numStr) + " Error loading animation: incorrect animation name!");
                 return false;
             }
             if (findAnimation(value.substr(0, value.length() - 1)) != -1) {
-                Log::write("ErrorAnimation: double name animation!");
+                log(filename + " line:" + toStr(numStr) + " Error loading animation: animation with the name already added!");
                 return false;
             }
             if (tmp.name != "") {
@@ -64,6 +68,7 @@ bool Animation::loadFromFile(sf::String filename) {
             tmp.width = std::stoi(value);
         if (name == "height")
             tmp.height = std::stoi(value);
+        numStr++;
     }
     if (tmp.name != "")
         animations.push_back(tmp);

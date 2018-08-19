@@ -1,4 +1,4 @@
-textures = /textures/
-objects = /objects/
-animations = /animations/
-maps = /maps/
+textures = ./textures/
+objects = ./objects/
+animations = ./animations/
+maps = ./maps/

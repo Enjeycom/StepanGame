@@ -5,14 +5,16 @@
 #include "./GameMain.hpp"
 #include "./Player.hpp"
 #include "./Log.hpp"
+#include "./Pathways.hpp"
 
 #define HD sf::VideoMode(1280, 720)
 #define HDN sf::VideoMode(1366, 768)
 #define NTSC sf::VideoMode(720, 480)
 
 int main() {
-    Log::open();
-    Log::write("Game starting...");
+    Log::debug == true;
+    log("Game starting...");
+    Pathways::loadFromFile();
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(NTSC, "Game", sf::Style::Default, settings);
