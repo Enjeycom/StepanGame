@@ -3,12 +3,13 @@
 
 #include <string>
 #include "./Tools.hpp"
+#include "./Physics.hpp"
 
 float Tools::deltaTimeValue;
 sf::Clock Tools::deltaClock;
 
 void Tools::updateTime() {
-    deltaTimeValue = deltaClock.restart().asMicroseconds()/1000;
+    deltaTimeValue = deltaClock.restart().asMicroseconds() / 1000 * Physics::timeSpeed;
 }
 
 int Tools::getDeltaTime() {

@@ -7,6 +7,8 @@
 class Physics {
     public:
         static float g;
+        static float timeSpeed;
+        static bool loadFromFile();
 };
 
 #endif  // PHYSICS_H_

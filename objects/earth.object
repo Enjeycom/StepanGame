@@ -1,7 +1,7 @@
 characters:
 id = 0
 name = earth
-textre = earth.animation.png
+textre = earth
 
 effects:
 jump = 3

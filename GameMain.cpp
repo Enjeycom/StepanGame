@@ -6,7 +6,7 @@
 #include "./Player.hpp"
 #include "./Log.hpp"
 #include "./Tools.hpp"
-#include "./Pathways.hpp"
+#include "./Loader.hpp"
 
 #define HD sf::VideoMode(1280, 720)
 #define HDN sf::VideoMode(1366, 768)
@@ -14,9 +14,11 @@
 
 int main() {
     log("Game starting...");
-    Pathways::loadFromFile();
-    sf::ContextSettings cs(0,0,16,2,1,0,false);
-    sf::RenderWindow window(NTSC, "Game", sf::Style::Default, cs);
+    log("Loading variables...");
+    if (!Loader::loadVariables())
+        close("Critical error: loading variables!");
+    log("Initializate variables...");
+    sf::RenderWindow window(NTSC, "Game", sf::Style::Default);
     Player player;
     log("Game loop starting...");
     while (window.isOpen()) {
@@ -38,4 +40,9 @@ int main() {
     }
     Log::close();
     return 0;
+}
+
+void close(std::string massege) {
+    log(massege + "\nGame close");
+    exit(0);
 }

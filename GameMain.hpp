@@ -5,6 +5,7 @@
 #define GAMEMAIN_H_
 
 int main();
+void close(std::string massege);
 
 #endif  // GAMEMAIN_H_
 
