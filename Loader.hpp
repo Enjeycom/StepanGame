@@ -5,9 +5,9 @@
 #define LOADER_H_
 
 class Loader {
-    private:
     public:
         static bool loadVariables();
+        static bool loadFonts();
 };
 
 #endif  // LOADER_H_

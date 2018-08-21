@@ -1,6 +1,7 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "./GameMain.hpp"
 #include "./Player.hpp"
@@ -14,11 +15,22 @@
 
 int main() {
     log("Game starting...");
-    log("Loading variables...");
+    sf::Text text;
+     log("Loading variables...");
     if (!Loader::loadVariables())
         close("Critical error: loading variables!");
-    log("Initializate variables...");
+    if (!Loader::loadFonts())
+        close("Critical error: loading fonts!");
+    text.setString("Loading...");
+    text.setColor(sf::Color::White);
+    text.setFont(mainFont);
+    text.setPosition(10,10);
     sf::RenderWindow window(NTSC, "Game", sf::Style::Default);
+    window.clear();
+    window.draw(text);
+    window.display();
+    for(double i = 0; i < 300000000; i++){}
+    log("Initializate variables...");
     Player player;
     log("Game loop starting...");
     while (window.isOpen()) {
