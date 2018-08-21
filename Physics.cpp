@@ -3,4 +3,4 @@
 
 #include "Physics.hpp"
 
-float Physics::g = 0.049;
+float Physics::g = 0.03;

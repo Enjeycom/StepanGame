@@ -7,7 +7,7 @@
 #include "./Log.hpp"
 
 std::ofstream Log::file;
-bool Log::debug;
+bool Log::debug = true;
 
 void Log::open() {
     file.open("./log.txt", std::ios::app);

@@ -16,8 +16,8 @@ int Animation::findAnimation(std::string name) {
     return -1;
 }
 
-bool Animation::loadFromFile(sf::String filename) {
-    filename = getPath("animation") + filename + ".animation";
+bool Animation::loadFromFile(std::string filename) {
+    filename = getPath("animations") + filename + ".animation";
     std::ifstream file(filename);
     if (!file.is_open()) {
         log("Error loading animation: file \"" + filename + "\" not found!");
@@ -39,8 +39,10 @@ bool Animation::loadFromFile(sf::String filename) {
         std::string value = command.substr(indx + 1, command.length() - 1);
         trim(name);
         trim(value);
-        if (name == "texture")
-            texture.loadFromFile(getPath("texture") + value + ".texture");
+        if (name == "texture"){
+            if (!texture.loadFromFile(getPath("textures") + value + ".texture"))
+                return false;
+        }
         if (name == "levels")
             levels = std::stoi(value);
         if (name == "name") {
@@ -77,7 +79,7 @@ bool Animation::loadFromFile(sf::String filename) {
 
 void Animation::update() {
     if (changed > -1 && changed < static_cast<int>(animations.size())) {
-        frame += animations[changed].speed;
+        frame += animations[changed].speed * deltaTime;
         if (frame > animations[changed].frames - 1)
             frame = 0;
         if (animations[changed].reverse) {

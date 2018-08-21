@@ -4,9 +4,20 @@
 #include <string>
 #include "./Tools.hpp"
 
-void trim(std::string &str, char sym) {
+float Tools::deltaTimeValue;
+sf::Clock Tools::deltaClock;
+
+void Tools::updateTime() {
+    deltaTimeValue = deltaClock.restart().asMicroseconds()/1000;
+}
+
+int Tools::getDeltaTime() {
+    return deltaTimeValue;
+}
+
+void Tools::trimString(std::string &str, char sym) {
     std::string res;
-    for (int i = 0; i <str.length(); i++) {
+    for (size_t i = 0; i < str.length(); i++) {
         if (str[i] != sym)
             res += str[i];
     }

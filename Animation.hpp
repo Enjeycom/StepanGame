@@ -28,7 +28,7 @@ class Animation {
         int changed = -1;
         int findAnimation(std::string name);
     public:
-        bool loadFromFile(sf::String filename);
+        bool loadFromFile(std::string filename);
         void update();
         void setSprite(sf::Sprite &sprite);
         bool changeAnimation(sf::String name, bool reverse);

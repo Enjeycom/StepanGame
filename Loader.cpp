@@ -6,5 +6,5 @@
 #include "./Loader.hpp"
 
 bool Loader::loadVariables() {
-   
+   return true;
 }

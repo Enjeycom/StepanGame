@@ -5,6 +5,7 @@
 #include "./GameMain.hpp"
 #include "./Player.hpp"
 #include "./Log.hpp"
+#include "./Tools.hpp"
 #include "./Pathways.hpp"
 
 #define HD sf::VideoMode(1280, 720)
@@ -12,15 +13,12 @@
 #define NTSC sf::VideoMode(720, 480)
 
 int main() {
-    Log::debug == true;
     log("Game starting...");
     Pathways::loadFromFile();
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-    sf::RenderWindow window(NTSC, "Game", sf::Style::Default, settings);
-    sf::View camera(sf::FloatRect(0, 0, 720, 480));
+    sf::ContextSettings cs(0,0,16,2,1,0,false);
+    sf::RenderWindow window(NTSC, "Game", sf::Style::Default, cs);
     Player player;
-    Log::write("Game loop starting...");
+    log("Game loop starting...");
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {
@@ -28,14 +26,12 @@ int main() {
                 window.close();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-             Log::write("Game close");
+            log("Game close");
             Log::close();
             return 0;
         }
-
+        Tools::updateTime();
         player.update();
-        camera.setCenter(player.getPosition());
-        // window.setView(camera);
         window.clear(sf::Color::White);
         player.draw(window);
         window.display();
