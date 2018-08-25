@@ -1,0 +1,9 @@
+texture = earth
+levels = 1
+
+name = main:
+width = 128
+height = 128
+level = 0
+frames = 1
+speed = 0

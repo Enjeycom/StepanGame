@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-struct animation{
+struct anim{
     sf::String name;
     int width;
     int height;
@@ -21,7 +21,7 @@ class Animation {
     private:
         sf::Texture texture;
         sf::Sprite *sprite;
-        std::vector <animation> animations;
+        std::vector <anim> animations;
         bool work;
         float frame = 0;
         int levels = 0;
@@ -30,6 +30,7 @@ class Animation {
     public:
         bool loadFromFile(std::string filename);
         void update();
+        sf::Texture getTexture();
         void setSprite(sf::Sprite &sprite);
         bool changeAnimation(sf::String name, bool reverse);
 };

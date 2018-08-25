@@ -16,7 +16,6 @@ Player::Player() {
     speed = 0.5;
     jumpPower = 3;
     dy = 0;
-    frame = 0;
 }
 
 void Player::update() {
@@ -46,9 +45,9 @@ void Player::update() {
         sprite.setPosition(sprite.getPosition().x,
         480 - 256 * sprite.getScale().y);
     }
+    animation.update();
 }
 
 void Player::draw(sf::RenderWindow &window) {
-    animation.update();
     window.draw(sprite);
 }

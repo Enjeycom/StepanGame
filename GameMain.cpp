@@ -6,6 +6,7 @@
 #include "./GameMain.hpp"
 #include "./Player.hpp"
 #include "./Log.hpp"
+#include "./Map.hpp"
 #include "./Tools.hpp"
 #include "./Loader.hpp"
 
@@ -29,7 +30,9 @@ int main() {
     window.clear();
     window.draw(text);
     window.display();
-    for(double i = 0; i < 300000000; i++){}
+    
+    Map::loadObjects();
+    Map::loadFromFile("start");
     log("Initializate variables...");
     Player player;
     log("Game loop starting...");
@@ -44,9 +47,13 @@ int main() {
             Log::close();
             return 0;
         }
+        // Update
         Tools::updateTime();
+        Map::update();
         player.update();
-        window.clear(sf::Color::White);
+        // Draw
+        window.clear(sf::Color::Black);
+        Map::draw(window);
         player.draw(window);
         window.display();
     }

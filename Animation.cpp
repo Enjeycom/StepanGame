@@ -24,7 +24,7 @@ bool Animation::loadFromFile(std::string filename) {
         return false;
     }
     std::string command;
-    animation tmp;
+    anim tmp;
     int numStr = 0;
     while (!file.eof()) {
         getline(file, command);
@@ -100,7 +100,8 @@ void Animation::update() {
 
 void Animation::setSprite(sf::Sprite &sprite) {
     this->sprite = &sprite;
-    this->sprite->setTexture(texture);
+    texture.setSmooth(8);
+    this->sprite->setTexture(texture.getTexture());
 }
 
 bool Animation::changeAnimation(sf::String name, bool reverse = false) {
@@ -111,4 +112,13 @@ bool Animation::changeAnimation(sf::String name, bool reverse = false) {
         return true;
     }
     return false;
+}
+
+sf::Texture Animation::getTexture() {
+    return texture;
+}
+
+Animation::Animation(const Animation &object) {
+    *this = object;
+    this->texture = object.getTexture().get;
 }

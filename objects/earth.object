@@ -1,9 +1,4 @@
 characters:
-id = 0
-name = earth
-textre = earth
-
-effects:
-jump = 3
-speed = 0.8
+id = 1
+animation = earth
 

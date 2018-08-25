@@ -6,12 +6,18 @@
 
 #include <vector>
 #include <string>
+#include "./Object.hpp"
 
 class Map {
     private:
-        std::vector<std::vector<int>> staticObjects;
+        static std::vector<Object> objects;
+        static std::vector<std::vector<Object>> staticObjects;
     public:
-        bool loadFromFile(std::string filename);
+        static bool loadFromFile(std::string filename);
+        static bool loadObjects();
+        static Object searchObject(int id);
+        static void update();
+        static void draw(sf::RenderWindow &window);
 };
 
 #endif  // MAP_H_
