@@ -1,8 +1,8 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#include <iostream>
 #include <dirent.h>
+#include <iostream>
 #include "./Loader.hpp"
 #include "./Pathways.hpp"
 #include "./Physics.hpp"

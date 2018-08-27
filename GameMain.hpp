@@ -1,11 +1,12 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#ifndef GAMEMAIN_H_
-#define GAMEMAIN_H_
+#ifndef GAMEMAIN_HPP_
+#define GAMEMAIN_HPP_
+
+#include <string>
 
 int main();
-void close(std::string massege);
+void close(const std::string massege);
 
-#endif  // GAMEMAIN_H_
-
+#endif  // GAMEMAIN_HPP_

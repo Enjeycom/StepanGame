@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "./GameMain.hpp"
+#include "./DebugInfoPanel.hpp"
 #include "./Player.hpp"
 #include "./Log.hpp"
 #include "./Map.hpp"
@@ -23,15 +24,22 @@ int main() {
     if (!Loader::loadFonts())
         close("Critical error: loading fonts!");
     text.setString("Loading...");
-    text.setColor(sf::Color::White);
+    text.setFillColor(sf::Color::White);
     text.setFont(mainFont);
-    text.setPosition(10,10);
+    text.setPosition(10, 10);
     sf::RenderWindow window(NTSC, "Game", sf::Style::Default);
+
+    int windowX = static_cast<int>(sf::VideoMode::getDesktopMode().width) /
+    2 - window.getSize().x / 2;
+    int windowY = static_cast<int>(sf::VideoMode::getDesktopMode().height) /
+    2 - window.getSize().y / 2;
+    window.setPosition({windowX, windowY});
     window.clear();
     window.draw(text);
     window.display();
-    
+    log("Loading objects...");
     Map::loadObjects();
+    log("Loading map...");
     Map::loadFromFile("start");
     log("Initializate variables...");
     Player player;
@@ -52,9 +60,10 @@ int main() {
         Map::update();
         player.update();
         // Draw
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color(117, 187, 253));
         Map::draw(window);
         player.draw(window);
+        DebugInfoPanel::draw(window);
         window.display();
     }
     Log::close();

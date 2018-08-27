@@ -1,14 +1,16 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#ifndef PHYSICS_H_
-#define PHYSICS_H_
+#ifndef PHYSICS_HPP_
+#define PHYSICS_HPP_
 
 class Physics {
-    public:
-        static float g;
-        static float timeSpeed;
-        static bool loadFromFile();
+ public:
+    static float g;
+    static float timeSpeed;
+    static bool loadFromFile();
 };
 
-#endif  // PHYSICS_H_
+#define gravity Physics::g
+
+#endif  // PHYSICS_HPP_

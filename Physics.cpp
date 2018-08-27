@@ -12,9 +12,10 @@ float Physics::g;
 float Physics::timeSpeed;
 
 bool Physics::loadFromFile() {
-    std::ifstream file("./variables/physics.variables");
+    std::string filename = "./variables/physics.variables";
+    std::ifstream file(filename);
     if (!file.is_open()) {
-        log("Error physics load: file \"./variables/physics.variables\" not found!");
+        log("Error physics load: file \"" + filename + "\" not found!");
         return false;
     }
     std::string command;
@@ -31,7 +32,7 @@ bool Physics::loadFromFile() {
         std::string value = command.substr(indx + 1, command.length() - 1);
         trim(name);
         trim(value);
-        if(name.empty() || value.empty()){
+        if (name.empty() || value.empty()) {
             log("Error physics load: incorrect note!");
             return false;
         } else {
@@ -39,7 +40,7 @@ bool Physics::loadFromFile() {
                 g = std::stof(value);
             if (name == "timeSpeed")
                 timeSpeed = std::stof(value);
-        } 
+        }
     }
     return true;
 }

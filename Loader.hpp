@@ -1,13 +1,13 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#ifndef LOADER_H_
-#define LOADER_H_
+#ifndef LOADER_HPP_
+#define LOADER_HPP_
 
 class Loader {
-    public:
-        static bool loadVariables();
-        static bool loadFonts();
+ public:
+    static bool loadVariables();
+    static bool loadFonts();
 };
 
-#endif  // LOADER_H_
+#endif  // LOADER_HPP_

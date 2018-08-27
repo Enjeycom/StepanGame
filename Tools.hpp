@@ -14,14 +14,14 @@
 #define mainFont Tools::mainFontValue
 
 class Tools{
-    private:
-        static sf::Clock deltaClock;
-        static float deltaTimeValue;
-    public:
-        static sf::Font mainFontValue;
-        static void updateTime();
-        static int getDeltaTime();
-        static void trimString(std::string &str, char sym = ' ');
+ private:
+    static sf::Clock deltaClock;
+    static float deltaTimeValue;
+ public:
+    static sf::Font mainFontValue;
+    static void updateTime();
+    static int getDeltaTime();
+    static void trimString(const std::string &str, char sym = ' ');
 };
 
 #endif  // TOOLS_H_

@@ -1,10 +1,12 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#include "Object.hpp"
+#include "./Object.hpp"
+#include "./Map.hpp"
+#include "./Log.hpp"
 
 Object::Object() {
-    
+    id = 0;
 }
 
 void Object::setId(int id) {
@@ -18,14 +20,21 @@ void Object::setAnimation(std::string filename) {
 
 void Object::setPosition(int x, int y) {
     sprite.setPosition(x, y);
+    if (id != 0) {
+        float scaleX = static_cast<float>(mapSize) /
+        static_cast<float>(sprite.getTexture()->getSize().x);
+        float scaleY = static_cast<float>(mapSize) /
+        static_cast<float>(sprite.getTexture()->getSize().y);
+        sprite.setScale(scaleX, scaleY);
+    }
 }
 
-int Object::getId(){
+int Object::getId() {
     return id;
 }
 
 sf::Vector2f Object::getPosition() {
-    return sf::Vector2f(sprite.getPosition().x, sprite.getPosition().y);
+    return sprite.getPosition();
 }
 
 void Object::update() {

@@ -8,6 +8,7 @@
 #include "./Log.hpp"
 #include "./Tools.hpp"
 #include "./Pathways.hpp"
+#include "./ManagerTextures.hpp"
 
 int Animation::findAnimation(std::string name) {
     for (unsigned int i = 0; i < animations.size(); i++)
@@ -32,26 +33,28 @@ bool Animation::loadFromFile(std::string filename) {
             continue;
         size_t indx = command.find("=");
         if (indx == std::string::npos) {
-            log(filename + " line:" + toStr(numStr) + " Error loading animation: incorrect note!");
+            log(filename + " line:" + toStr(numStr) +
+            " Error loading animation: incorrect note!");
             return false;
         }
         std::string name = command.substr(0, indx);
         std::string value = command.substr(indx + 1, command.length() - 1);
         trim(name);
         trim(value);
-        if (name == "texture"){
-            if (!texture.loadFromFile(getPath("textures") + value + ".texture"))
-                return false;
+        if (name == "texture") {
+            texture = getTexture(value);
         }
         if (name == "levels")
             levels = std::stoi(value);
         if (name == "name") {
             if (value[value.length() - 1] != ':') {
-                log(filename + " line:" + toStr(numStr) + " Error loading animation: incorrect animation name!");
+                log(filename + " line:" + toStr(numStr) +
+                " Error loading animation: incorrect animation name!");
                 return false;
             }
             if (findAnimation(value.substr(0, value.length() - 1)) != -1) {
-                log(filename + " line:" + toStr(numStr) + " Error loading animation: animation with the name already added!");
+                log(filename + " line:" + toStr(numStr) +
+                " Error loading animation: animation already added!");
                 return false;
             }
             if (tmp.name != "") {
@@ -79,7 +82,7 @@ bool Animation::loadFromFile(std::string filename) {
 
 void Animation::update() {
     if (changed > -1 && changed < static_cast<int>(animations.size())) {
-        frame += animations[changed].speed * deltaTime;
+        frame += animations[changed].speed * deltaTime / 2;
         if (frame > animations[changed].frames - 1)
             frame = 0;
         if (animations[changed].reverse) {
@@ -100,8 +103,8 @@ void Animation::update() {
 
 void Animation::setSprite(sf::Sprite &sprite) {
     this->sprite = &sprite;
-    texture.setSmooth(8);
-    this->sprite->setTexture(texture.getTexture());
+    texture->setSmooth(8);
+    this->sprite->setTexture(*texture);
 }
 
 bool Animation::changeAnimation(sf::String name, bool reverse = false) {
@@ -114,11 +117,6 @@ bool Animation::changeAnimation(sf::String name, bool reverse = false) {
     return false;
 }
 
-sf::Texture Animation::getTexture() {
-    return texture;
-}
-
-Animation::Animation(const Animation &object) {
-    *this = object;
-    this->texture = object.getTexture().get;
+sf::Vector2i Animation::getSizeFrame() {
+    return sf::Vector2i(animations[0].width, animations[0].height);
 }

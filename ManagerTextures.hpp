@@ -1,24 +1,26 @@
 // Copyright 2018, Enjeycom
 // Author: Enjeycom <enjeycom@gmail.com>
 
-#ifndef MANAGERTEXTURES_H_
-#define MANAGERTEXTURES_H_
+#ifndef MANAGERTEXTURES_HPP_
+#define MANAGERTEXTURES_HPP_
 
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 
 struct text {
-    sf::Texture texture;
+    sf::Texture *texture;
     std::string filename;
 };
 
 class ManagerTextures {
-    private:
-        static std::vector<text> textures;
-    public:
-        static bool loadTextureFromFile(std::string filename);
-        static sf::Texture getTexture(std::string filename);
+ private:
+    static std::vector<text*> textures;
+ public:
+    static bool loadTextureFromFile(const std::string filename);
+    static sf::Texture* getTexture(const std::string filename);
 };
 
-#endif  // MANAGERTEXTURES_H_
+#define getTexture ManagerTextures::getTexture
+
+#endif  // MANAGERTEXTURES_HPP_

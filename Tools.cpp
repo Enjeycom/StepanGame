@@ -10,7 +10,8 @@ sf::Clock Tools::deltaClock;
 sf::Font Tools::mainFontValue;
 
 void Tools::updateTime() {
-    deltaTimeValue = deltaClock.restart().asMicroseconds() / 1000 * Physics::timeSpeed;
+    deltaTimeValue = deltaClock.restart().asMicroseconds() /
+    1000 * Physics::timeSpeed;
 }
 
 int Tools::getDeltaTime() {
