@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include "./Object.hpp"
+#include "./Camera.hpp"
 
 class Map {
  private:
@@ -15,11 +16,11 @@ class Map {
     static int sizeObjects;
  public:
     static void update();
-    static void draw(const sf::RenderWindow &window);
+    static void draw(sf::RenderWindow *window, Camera *Camera);
     static bool loadFromFile(const std::string filename);
     static bool loadObjects();
     static int getSizeObject();
-    static int getAtPosition(int x, int y);
+    static Object getAtPosition(int x, int y);
     static Object searchObject(int id);
     static sf::Vector2i getSize();
 };

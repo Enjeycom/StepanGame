@@ -1,4 +1,5 @@
 characters:
 id = 2
 animation = grass
+solid = 1
 

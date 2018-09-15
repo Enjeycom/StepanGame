@@ -30,7 +30,7 @@ class Animation {
     int findAnimation(std::string name);
  public:
     void update();
-    void setSprite(const sf::Sprite &sprite);
+    void setSprite(sf::Sprite *sprite);
     bool changeAnimation(sf::String name, bool reverse);
     bool loadFromFile(std::string filename);
     sf::Vector2i getSizeFrame();

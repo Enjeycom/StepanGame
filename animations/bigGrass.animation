@@ -1,0 +1,9 @@
+texture = bigGrass
+levels = 1
+
+name = main:
+width = 128
+height = 128
+level = 0
+frames = 4
+speed = 0.04

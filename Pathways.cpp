@@ -19,6 +19,7 @@ std::string Pathways::get(std::string key) {
 }
 
 bool Pathways::loadFromFile() {
+    log(">Loading pathways...");
     std::string filename = "./variables/pathways.variables";
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -37,8 +38,8 @@ bool Pathways::loadFromFile() {
         }
         std::string name = command.substr(0, indx);
         std::string value = command.substr(indx + 1, command.length() - 1);
-        trim(name);
-        trim(value);
+        trim(&name);
+        trim(&value);
         if (name.empty() || value.empty()) {
             log("Error pathways load: incorrect note!");
             return false;

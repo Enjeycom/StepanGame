@@ -25,7 +25,7 @@ void Log::write(std::string note) {
         open();
     time_t now = time(0);
     char *buff[50];
-    std::string snow = ctime_r(&now, *buff);
+    std::string snow = ctime(&now);
     file << snow.substr(0, snow.size() - 1) << " | " << note << std::endl;
 }
 

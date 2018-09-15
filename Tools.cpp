@@ -3,6 +3,7 @@
 
 #include <string>
 #include "./Tools.hpp"
+#include "./Log.hpp"
 #include "./Physics.hpp"
 
 float Tools::deltaTimeValue;
@@ -18,11 +19,7 @@ int Tools::getDeltaTime() {
     return deltaTimeValue;
 }
 
-void Tools::trimString(std::string &str, char sym) {
-    std::string res;
-    for (size_t i = 0; i < str.length(); i++) {
-        if (str[i] != sym)
-            res += str[i];
-    }
-    str = res;
+void Tools::trimString(std::string *str) {
+    str->erase(0, str->find_first_not_of("\t "));
+    str->erase(str->find_last_not_of("\t ") + 1);
 }

@@ -12,12 +12,12 @@
 Player::Player() {
     animation.loadFromFile("player");
     sprite.setPosition(0, 0);
-    animation.setSprite(sprite);
+    animation.setSprite(&sprite);
     animation.changeAnimation("stay", false);
     animation.update();
     sprite.setScale(0.3, 0.3);
-    speed = 0.5;
-    jumpPower = 3;
+    speed = 0.3;
+    jumpPower = 1;
     vector = false;
     onGround = false;
     onLeft = false;
@@ -30,7 +30,7 @@ void Player::update() {
     // Calculate physics
     cyb = Map::getSize().y * mapSize;
     cxr = Map::getSize().x * mapSize;
-    cyt = 0;
+    cyt = -MAXFLOAT;
     cxl = 0;
     float x = getPosition().x;
     float y = getPosition().y;
@@ -38,15 +38,15 @@ void Player::update() {
     float h = animation.getSizeFrame().y * sprite.getScale().y;
     float xw = x + w;
     float yh = y + h;
-    float mx = getPosition().x  / mapSize;
-    float my = getPosition().y  / mapSize;
+    float mx = getPosition().x / mapSize;
+    float my = getPosition().y / mapSize;
     float mxw = (x + w) / mapSize;
     dx = 0;
 
     // Control
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && onGround) {
         onGround = false;
-        dy = -jumpPower;
+        dy = -jumpPower * deltaTime;
         animation.changeAnimation("jump", vector);
     }
 
@@ -55,6 +55,8 @@ void Player::update() {
         dx = -speed * deltaTime;
         if (onGround)
             animation.changeAnimation("go", vector);
+        else 
+            animation.changeAnimation("jump", vector);
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -62,32 +64,37 @@ void Player::update() {
         dx = speed * deltaTime;
         if (onGround)
             animation.changeAnimation("go", vector);
+        else 
+            animation.changeAnimation("jump", vector);
     }
+
+    if (onGround && dx == 0)
+        animation.changeAnimation("stay", vector);
 
     // Colision
     for (int i = x + w * 0.2; i < xw - w * 0.2; i++)
-        if (Map::getAtPosition(i / mapSize, (yh + 1) / mapSize) != 0) {
+        if (Map::getAtPosition(i / mapSize, (yh + 1) / mapSize).isSolid()) {
             int tmp = static_cast<int>((yh + 1) / mapSize) * mapSize;
             if (my - tmp < cyb - tmp)
                 cyb = tmp;
         }
 
     for (int i = x + w * 0.2; i < xw - w * 0.2; i++)
-        if (Map::getAtPosition(i / mapSize, (y - 1) / mapSize) != 0) {
+        if (Map::getAtPosition(i / mapSize, (y - 1) / mapSize).isSolid()) {
             int tmp = static_cast<int>((y - 1) / mapSize + 1) * mapSize;
             if (tmp - my < tmp - cyt)
                 cyt = tmp;
         }
 
     for (int i = y + 2; i < yh - 2; i++)
-        if (Map::getAtPosition((xw + 1) / mapSize, i / mapSize) != 0) {
+        if (Map::getAtPosition((xw + 1) / mapSize, i / mapSize).isSolid()) {
             int tmp = static_cast<int>((xw + 1) / mapSize) * mapSize;
             if (mxw - tmp < cxr - tmp)
                 cxr = tmp;
         }
 
     for (int i = y + 2; i < yh - 2; i++)
-        if (Map::getAtPosition((x - 1) / mapSize, i/mapSize) != 0) {
+        if (Map::getAtPosition((x - 1) / mapSize, i/mapSize).isSolid()) {
             int tmp = static_cast<int>((x - 1) / mapSize + 1) * mapSize;
             if (tmp - mx < tmp - cxl)
                 cxl = tmp;
@@ -96,11 +103,10 @@ void Player::update() {
     // Calculate
     dy += gravity * deltaTime;
 
-    if (yh + dy > cyb) {
+    if (yh + dy >= cyb) {
         onGround = true;
         dy = 0;
         y = cyb - h;
-        animation.changeAnimation("stay", vector);
     } else {
         onGround = false;
     }
@@ -134,14 +140,11 @@ void Player::update() {
         x += dx;
 
     setPosition(x, y);
-    setInfo("On ground", onGround);
-    setInfo("On right", onRight);
-    setInfo("On left", onLeft);
     animation.update();
 }
 
-void Player::draw(sf::RenderWindow &window) {
-    window.draw(sprite);
+void Player::draw(sf::RenderWindow *window) {
+    window->draw(sprite);
     /* Collision line
     sf::RectangleShape s;
     s.setPosition(cxl-2,0);

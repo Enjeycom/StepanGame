@@ -7,12 +7,15 @@
 #include "./Log.hpp"
 #include "./Map.hpp"
 #include "./Tools.hpp"
+#include "./Camera.hpp"
 
 std::vector<Object> Map::objects;
 std::vector<std::vector<Object>> Map::staticObjects;
 int Map::sizeObjects;
 
 bool Map::loadFromFile(std::string filename) {
+    log("Loading map...");
+
     filename = getPath("maps") + filename + ".map";
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -43,6 +46,8 @@ bool Map::loadFromFile(std::string filename) {
 }
 
 bool Map::loadObjects() {
+    log("Loading objects...");
+
     std::vector<std::string> files;
     DIR *dir;
     struct dirent *ent;
@@ -85,11 +90,18 @@ bool Map::loadObjects() {
                 std::string name = command.substr(0, indx);
                 std::string value = command.substr(indx + 1,
                                     command.length() - 1);
-                trim(name);
-                trim(value);
+                trim(&name);
+                trim(&value);
                 if (mode == "characters:") {
                     if (name == "id")
                         object.setId(std::stoi(value));
+                    if (name == "solid") {
+                        int a = std::stoi(value);
+                        if (a == 0)
+                            object.setSolid(false);
+                        else
+                            object.setSolid(true);
+                    }
                     if (name == "animation")
                         object.setAnimation(value);
                 }
@@ -117,10 +129,12 @@ void Map::update() {
     }
 }
 
-void Map::draw(sf::RenderWindow &window) {
+void Map::draw(sf::RenderWindow *window, Camera *camera) {
     for (size_t i = 0; i < staticObjects.size(); i++) {
         for (size_t j = 0; j < staticObjects[i].size(); j++) {
-            staticObjects[i][j].draw(window);
+            if (camera->checkIn(&staticObjects[i][j])){
+                staticObjects[i][j].draw(window);
+            }
         }
     }
 }
@@ -130,10 +144,10 @@ sf::Vector2i Map::getSize() {
             static_cast<int>(staticObjects.size())};
 }
 
-int Map::getAtPosition(int x, int y) {
+Object Map::getAtPosition(int x, int y) {
     if (x >= 0 && x < getSize().x && y >= 0 && y < getSize().y)
-        return staticObjects[y][x].getId();
-    return 0;
+        return staticObjects[y][x];
+    return Object();
 }
 
 int Map::getSizeObject() {

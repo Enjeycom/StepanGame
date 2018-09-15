@@ -12,6 +12,7 @@ float Physics::g;
 float Physics::timeSpeed;
 
 bool Physics::loadFromFile() {
+    log(">Loading physics...");
     std::string filename = "./variables/physics.variables";
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -30,8 +31,8 @@ bool Physics::loadFromFile() {
         }
         std::string name = command.substr(0, indx);
         std::string value = command.substr(indx + 1, command.length() - 1);
-        trim(name);
-        trim(value);
+        trim(&name);
+        trim(&value);
         if (name.empty() || value.empty()) {
             log("Error physics load: incorrect note!");
             return false;

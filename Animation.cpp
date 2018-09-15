@@ -39,8 +39,8 @@ bool Animation::loadFromFile(std::string filename) {
         }
         std::string name = command.substr(0, indx);
         std::string value = command.substr(indx + 1, command.length() - 1);
-        trim(name);
-        trim(value);
+        trim(&name);
+        trim(&value);
         if (name == "texture") {
             texture = getTexture(value);
         }
@@ -101,9 +101,9 @@ void Animation::update() {
     }
 }
 
-void Animation::setSprite(sf::Sprite &sprite) {
-    this->sprite = &sprite;
-    texture->setSmooth(8);
+void Animation::setSprite(sf::Sprite *sprite) {
+    this->sprite = sprite;
+    texture->setSmooth(256);
     this->sprite->setTexture(*texture);
 }
 

@@ -12,14 +12,12 @@ class Player : public Object {
  private:
     float speed;
     float jumpPower;
-    float dy, dx;
     bool vector;
     bool onGround;
     bool onTop;
     bool onLeft;
     bool onRight;
     Animation animation;
-
     float cyb;
     float cxr;
     float cyt;
@@ -27,7 +25,7 @@ class Player : public Object {
  public:
     Player();
     void update();
-    void draw(const sf::RenderWindow &window);
+    void draw(sf::RenderWindow *window);
 };
 
 #endif  // PLAYER_HPP_

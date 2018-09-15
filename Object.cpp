@@ -7,15 +7,22 @@
 
 Object::Object() {
     id = 0;
+    solid = false;
 }
 
 void Object::setId(int id) {
     this->id = id;
 }
 
+void Object::setSolid(bool solid) {
+    this->solid = solid;
+}
+
 void Object::setAnimation(std::string filename) {
     animation.loadFromFile(filename);
-    animation.setSprite(sprite);
+    animation.setSprite(&sprite);
+    if(!animation.changeAnimation("main", true))
+        log("Animation changed error: animation not found!");
 }
 
 void Object::setPosition(int x, int y) {
@@ -33,14 +40,23 @@ int Object::getId() {
     return id;
 }
 
+bool Object::isSolid() {
+    return solid;
+}
+
+sf::Vector2f Object::getVector(){
+    return {dx ,dy};
+}
+
 sf::Vector2f Object::getPosition() {
     return sprite.getPosition();
 }
 
 void Object::update() {
+    animation.changeAnimation("main",true);    
     animation.update();
 }
 
-void Object::draw(sf::RenderWindow &window) {
-    window.draw(sprite);
+void Object::draw(sf::RenderWindow *window) {
+    window->draw(sprite);
 }

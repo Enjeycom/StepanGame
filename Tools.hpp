@@ -21,7 +21,7 @@ class Tools{
     static sf::Font mainFontValue;
     static void updateTime();
     static int getDeltaTime();
-    static void trimString(const std::string &str, char sym = ' ');
+    static void trimString(std::string *str);
 };
 
 #endif  // TOOLS_H_
